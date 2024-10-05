@@ -1,3 +1,9 @@
+# README
+
+![c49099b0179b91812494614f50f8616d](.assets/c49099b0179b91812494614f50f8616d.png)
+
+![34ea5a439bdc52e3d4ce3ce88435a4ba](.assets/34ea5a439bdc52e3d4ce3ce88435a4ba.png)
+
 ## 简介
 
 主要功能页面：
@@ -58,6 +64,22 @@ SPMS/
   README.md
   requirements.txt   # 项目python环境需求表
 ```
+
+![4f70cc22ff77a02ee62b251988fd9afb](.assets/4f70cc22ff77a02ee62b251988fd9afb.png)
+
+## 后端架构
+
+![af76ae594500abde18021b66c597d288](.assets/af76ae594500abde18021b66c597d288.png)
+
+![607480a449e481eb99d3db483b1bf1e6](.assets/607480a449e481eb99d3db483b1bf1e6.png)
+
+## 测试环境
+
+![e6b2cbd80f7f3dd6e62f8138736bc1a1](.assets/e6b2cbd80f7f3dd6e62f8138736bc1a1.png)
+
+## 服务器部署
+
+![d1a9e11a7a299c049fae78b250a61692](.assets/d1a9e11a7a299c049fae78b250a61692.png)
 
 ## 环境配置
 
