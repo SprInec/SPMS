@@ -1,0 +1,968 @@
+:root {
+    --primary-color: #055ebd;
+    --title-color: #055ebd;
+    --hover-color: #034081;
+    --background-color: #f8f9fa;
+    /* 修改此处以避免与背景轻色重名 */
+    --text-color: #333333;
+    --table-title-color: #ffffff;
+    --button-text-color: #ffffff;
+    --sidebar-bg-color: #055ebd;
+    --sidebar-ani-color: #ffffff;
+    --sidebar-hover-color: #4A90E2;
+
+    --input-border-color: #ccc;
+    --input-bg-color: #f8f9fa;
+    --input-border-focus-color: #4A90E2;
+    --input-box-shadow: rgba(74, 144, 226, 0.5);
+
+    /* 侧边栏背景色 */
+    --button-bg-color: #055ebd;
+    /* 按钮背景色 */
+    --button-hover-color: #034081;
+    /* 按钮悬停色 */
+    --border-radius: 20px;
+    --shadow-light: rgba(0, 0, 0, 0.1);
+    --shadow-dark: rgba(0, 0, 0, 0.2);
+    --transition-speed: 0.3s;
+    --feature-cad-bg-1: #ffffff;
+    --feature-cad-bg-2: #d7dce0;
+    --feature-cad-box-shadow: #4b4a4a;
+    --feature-cad-box-shadow2: #707070;
+
+    --table-animation-color: #f2f2f2;
+    --table-border-color: #ddd;
+
+    --table-td-color: #ddd;
+
+    --login-bg-color: #fff;
+
+    --card-text-color: #055ebd;
+}
+
+:root.dark-theme {
+    --primary-color: #3f3f3f;
+    --title-color: rgb(204, 204, 204);
+    --hover-color: #2a2a2b;
+    --background-color: #242323;
+    --button-text-color: #ffffff;
+    --text-color: #d3d1d1;
+    --sidebar-bg-color: #2d2d2d;
+    /* 暗色主题下的侧边栏背景色 */
+    --button-bg-color: #39393b;
+    /* 暗色主题下的按钮背景色 */
+    --button-hover-color: #2c2b2b;
+    /* 暗色主题下的按钮悬停色 */
+    --shadow-light: rgb(42, 41, 41);
+    --shadow-dark: rgba(0, 0, 0, 0.15);
+
+    --input-border-color: #ccc;
+    --input-bg-color: #d6d6d6;;
+    --input-border-focus-color: #ffffff;
+    --input-box-shadow: rgba(252, 252, 252, 0.5);
+
+    --sidebar-hover-color: #454747;
+
+    --feature-cad-bg-1: #242323;
+    --feature-cad-bg-2: #2c2c2c;
+    --feature-cad-box-shadow: #222121;
+    --feature-cad-box-shadow2: #8f8f8f;
+
+    --table-animation-color: #757575;
+
+    --table-td-color: #949191;
+
+    --login-bg-color: #2d2d2d;
+
+    --card-text-color: #cecece;
+}
+
+/* ================================================================================== */
+
+/* 默认隐藏所有内容部分 */
+.content-section {
+    display: none;
+    width: 90%;
+    margin: 0 auto;
+}
+
+/* 默认显示主页面内容 */
+#主界面-content {
+    display: block;
+}
+
+/* ================================================================================== */
+
+/* 基础样式重置及引入Google字体 */
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@100;400;700&display=swap');
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body,
+html {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    height: 100%;
+}
+
+/* 基本字体和颜色设置 */
+body {
+    display: flex;
+    /* font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; */
+    color: var(--text-color);
+    /* 使用变量 */
+    background-color: var(--background-color);
+    /* 使用变量 */
+    transition: color var(--transition-speed), background-color var(--transition-speed);
+    font-family: 'Roboto', sans-serif;
+    line-height: 1.6;
+}
+
+/* ================================================================================== */
+
+.sidebar {
+    /* 删除 opacity: 0;，确保侧边栏在页面加载时可见 */
+    position: fixed;
+    height: 100%;
+    width: 250px;
+    z-index: 1;
+    top: 0;
+    left: -250px;
+    /* 初始隐藏在左侧 */
+    background-color: var(--sidebar-bg-color);
+    overflow-x: hidden;
+    padding-top: 20px;
+    box-shadow: 3px 0 15px var(--shadow-dark);
+    border-top-right-radius: var(--border-radius);
+    border-bottom-right-radius: var(--border-radius);
+    transition: left 0.5s ease;
+    /* 修改为 left 过渡 */
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.sidebar.active {
+    left: 0;
+    /* 显示侧边栏 */
+}
+
+.sidebar a {
+    padding: 12px 18px;
+    text-decoration: none;
+    font-size: 18px;
+    /* 保持字体大小不变或根据实际情况调整 */
+    color: var(--text-color);
+    display: block;
+    transition: background-color var(--transition-speed), transform 0.3s ease, color 0.3s ease;
+    border-radius: 20px;
+    margin: 5px 10px;
+    font-weight: 500;
+    /* 使用中等字重 */
+    letter-spacing: 0.5px;
+    /* 轻微增加字间距 */
+}
+
+.sidebar a:hover,
+.sidebar a:focus {
+    background-color: var(--hover-color);
+    transform: translateX(20px), scale(1.2);
+    color: var(--button-text-color);
+    /* 悬停时字体颜色改变为白色或其他颜色 */
+}
+
+/* 侧边栏链接的鼠标悬停效果 */
+.sidebar a {
+    display: block;
+    padding: 10px;
+    color: var(--table-animation-color);
+    text-decoration: none;
+    transition: background-color 0.3s ease;
+}
+
+.sidebar a:hover {
+    background-color: var(--sidebar-hover-color);
+}
+
+/* ================================================================================== */
+.main-content {
+    /* 其他样式保持不变 */
+    max-width: 100%; /* 或者你可以设置一个具体的最大宽度，如 1200px */
+    margin: 0 auto; /* 上下保持为0，左右自动调整 */
+    padding: 20px;
+    min-height: 100vh;
+    border-radius: 20px;
+    transition: padding var(--transition-speed), margin-left var(--transition-speed);
+    background-color: var(--background-light); /* 根据需要调整 */
+    transition: margin-left var(--transition-speed), width var(--transition-speed);
+    /* 侧边栏隐藏时无额外左边距 */
+    width: calc(100% - 0px);
+    /* 初始宽度设置为100% */
+}
+
+
+.sidebar.active + .main-content {
+    margin-left: 250px; /* 侧边栏展开时，内容区域向右移动 */
+    width: calc(100% - 250px); /* 减去侧边栏宽度 */
+}
+h1 {
+    text-align: center;
+    margin-top: 0;
+    /* 去掉标题顶部间距，更紧凑 */
+}
+
+form {
+    margin-bottom: 20px;
+}
+
+li {
+    text-align: left; /* 左对齐文本 */
+    margin-left: 20px; /* 在列表项的左边添加20px的外边距 */
+}
+
+/* 输入框标签样式 */
+label {
+    display: block;
+    margin-bottom: 5px;
+}
+
+/* 输入框样式 */
+input[type="time"] {
+    width: 120px;
+    /* 调整输入框宽度，根据需要进行调整 */
+    padding: 10px;
+    /* 调整内边距 */
+    margin-bottom: 10px;
+    box-sizing: border-box;
+    border: 2px solid var(--input-border-color);
+    border-radius: 20px;
+    background-color: var(--input-bg-color);
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+    outline: none;
+    font-size: 16px;
+    color: #333;
+    /* 设置文字颜色 */
+    font-family: Arial, sans-serif;
+    /* 设置字体 */
+    text-align: center;
+    /* 文字内容居中 */
+}
+
+/* 输入框聚焦样式 */
+input[type="time"]:focus {
+    border-color: var(--input-border-focus-color);
+    box-shadow: 0 0 8px var(--input-box-shadow);
+}
+
+/* 调整输入框内文字样式 */
+input[type="time"]::placeholder {
+    color: #999;
+    /* 设置占位符文字颜色 */
+    font-style: italic;
+    /* 设置占位符文字为斜体 */
+    text-align: center;
+}
+
+/* 输入框样式 */
+input[type="text"],
+input[type="number"],
+input[type="password"],
+input[type="email"],
+input[type="tel"],
+input[type="url"],
+textarea,
+select {
+    width: 100%;
+    padding: 12px;
+    margin-bottom: 10px;
+    box-sizing: border-box;
+    border: 2px solid var(--input-border-color);
+    border-radius: 20px;
+    background-color: var(--input-bg-color);
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+    outline: none;
+    font-size: 16px;
+}
+
+/* 输入框聚焦样式 */
+input[type="text"]:focus,
+input[type="password"]:focus,
+input[type="number"]:focus,
+input[type="email"]:focus,
+input[type="tel"]:focus,
+input[type="url"]:focus,
+textarea:focus,
+select:focus {
+    border-color: var(--input-border-focus-color);
+    box-shadow: 0 0 8px var(--input-box-shadow);
+}
+
+/* Checkbox 默认样式 */
+input[type="checkbox"] {
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    width: 25px;
+    /* 调整 checkbox 的宽度 */
+    height: 25px;
+    /* 调整 checkbox 的高度 */
+    margin-right: 10px;
+    /* 调整 checkbox 和文本之间的间距 */
+    border-radius: 10px;
+    border: 2px solid var(--input-border-color);
+    background-color: var(--input-bg-color);
+    transition: border-color 0.3s ease;
+    cursor: pointer;
+    vertical-align: middle;
+    /* 垂直对齐方式为居中 */
+}
+
+/* Checkbox 聚焦时的样式 */
+input[type="checkbox"]:focus {
+    outline: none;
+    border-color: var(--input-border-focus-color);
+    box-shadow: 0 0 8px var(--input-box-shadow);
+}
+
+/* Checkbox 选中状态的样式 */
+input[type="checkbox"]:checked {
+    background-color: var(--input-border-focus-color);
+    border-color: var(--input-border-focus-color);
+}
+
+/* Checkbox 选中时的图标样式 */
+input[type="checkbox"]:checked::before {
+    content: "\2713";
+    display: block;
+    width: 100%;
+    height: 100%;
+    text-align: center;
+    line-height: 20px;
+    /* 调整勾号图标的行高 */
+    color: var(--input-bg-color);
+    font-size: 14px;
+}
+
+/* 共享按钮样式 */
+input[type="submit"],
+button{
+    padding: 12px 20px;
+    border: none;
+    border-radius: 20px;
+    background-color: var(--button-bg-color);
+    color: var(--input-bg-color);
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.button-container {
+    display: flex;
+    justify-content: center;
+    gap: 5px;
+}
+
+.button-right {
+    padding: 14px 24px;
+}
+
+input[type="submit"]:hover,
+button:hover{
+    background-color: var(--button-hover-color);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+
+table {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0 10px;
+}
+
+th,
+td {
+    border: 1px solid var(--table-td-color);
+    padding: 10px;
+    text-align: center;
+    vertical-align: middle;
+}
+
+th {
+    background-color: var(--primary-color);
+    color: var(--table-title-color);
+}
+
+img {
+    width: 50px;
+    height: auto;
+}
+
+/* ================================================================================== */
+
+/* 主界面内容的标题和段落样式 */
+#主界面-content h1 {
+    font-size: 2.5em;
+    color: var(--title-color);
+    margin-bottom: 0.5em;
+    text-shadow: 1px 1px 5px rgba(0, 0, 0, 0.1);
+}
+
+#主界面-content p {
+    font-size: 1.2em;
+    max-width: 80%;
+    margin: auto;
+    line-height: 1.5;
+}
+
+/* 特色展示区域 */
+.features {
+    display: flex;
+    flex-direction: column;
+    /* 确保一排只显示一个 */
+    justify-content: center;
+    gap: 40px;
+    /* 增加卡片间距 */
+    padding: 20px;
+}
+
+.feature {
+    flex: 0 1 280px;
+    /* 缩小卡片大小 */
+    margin: 10px auto;
+    /* 居中显示 */
+    padding: 15px;
+    /* 调整内边距以适应卡片大小 */
+    background: linear-gradient(145deg, var(--feature-cad-bg-1), var(--feature-cad-bg-2));
+    border-radius: 30px;
+    /* 增加弧度 */
+    box-shadow: 5px 5px 20px --feature-cad-box-shadow;
+    /* transition: all 0.2s ease; */
+    /* 加快动画速度 */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    width: 80%;
+    height: 85%;
+    /* 调整宽度以缩小卡片 */
+    opacity: 0;
+    /* 初始状态为透明 */
+    transform: translateY(20px);
+    /* 初始状态向下偏移 */
+}
+
+.feature:hover {
+    transform: scale(1.5) translateY(0);
+    /* 鼠标悬停时放大并恢复原位 */
+    box-shadow: 5px 5px 30px var(--feature-cad-box-shadow2);
+    /* 增强阴影效果以增加强调 */
+}
+
+.feature h2 {
+    font-size: 1.5em;
+    color: var(--title-color);
+    margin: 15px 0;
+}
+
+.feature p {
+    font-size: 1em;
+}
+
+/* 动画效果激活状态 */
+.feature.active {
+    opacity: 1;
+    transform: translateY(0);
+    transition-duration: 0.3s;
+    /* 加快动画速度 */
+    transition-delay: 0.1s;
+    /* 减少延迟以使动画开始更快 */
+}
+
+/* ================================================================================== */
+/* 表格行淡入效果 */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
+
+/* 行滑入效果 */
+@keyframes slideIn {
+    from {
+        transform: translateX(-100px);
+        opacity: 0;
+    }
+
+    to {
+        transform: translateX(0);
+        opacity: 1;
+    }
+}
+
+/* 缩放效果 */
+@keyframes zoomIn {
+    from {
+        transform: scale(0.5);
+        opacity: 0;
+    }
+
+    to {
+        transform: scale(1);
+        opacity: 1;
+    }
+}
+
+/* 应用滑入效果 */
+#applyTable tr,
+#welfareTable tr,
+#feedback-table tr,
+#sys-accounts-table tr,
+#teacher-score-table tr,
+#jobTable tr,
+#employeeTableBody tr,
+#salaryTableBody tr,
+#attendanceTableBody1 tr,
+#attendanceTableBody2 tr {
+    animation: slideIn 0.5s ease-out, fadeIn 0.5s;
+}
+
+/* 鼠标悬停时的缩放效果 */
+#applyTable tr:hover,
+#feedback-table tr:hover,
+#sys-accounts-table tr:hover,
+#teacher-score-table tr:hover,
+#welfareTable tr:hover,
+#jobTable tr:hover,
+#salaryTableBody tr:hover,
+#employeeTableBody tr:hover,
+#attendanceTableBody1 tr:hover,
+#attendanceTableBody2 tr:hover {
+    transform: scale(1.03);
+    transition: transform 0.3s, background-color 0.3s;
+}
+
+/* 表格行基本样式 */
+#applyTable tr,
+#feedback-table tr,
+#sys-accounts-table tr,
+#teacher-score-table tr,
+#welfareTable tr,
+#jobTable tr,
+#salaryTableBody tr,
+#employeeTableBody tr,
+#attendanceTableBody1 tr,
+#attendanceTableBody2 tr {
+    animation: fadeIn 1s;
+    /* 应用淡入效果，持续时间为1秒 */
+}
+
+/* 鼠标悬停时的背景色改变效果 */
+#applyTable tr:hover,
+#teacher-score-table tr:hover,
+#feedback-table tr:hover,
+#sys-accounts-table tr:hover,
+#welfareTable tr:hover,
+#jobTable tr:hover,
+#salaryTableBody tr:hover,
+#employeeTableBody tr:hover,
+#attendanceTableBody1 tr:hover,
+#attendanceTableBody2 tr:hover {
+    background-color: --table-animation-color;
+    /* 鼠标悬停时的背景色 */
+    transition: background-color 0.3s;
+    /* 背景色改变的过渡效果，持续时间为0.3秒 */
+}
+/* ================================================================================== */
+#考勤管理-content {
+    padding: 20px;
+}
+
+/* 登录框样式 */
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0, 0, 0, 0.4);
+}
+
+.modal-content {
+    background-color: var(--background-color);
+    /* 使用自定义背景色 */
+    margin: 15% auto;
+    padding: 20px;
+    border-radius: var(--border-radius);
+    /* 使用自定义圆角变量 */
+    box-shadow: 0 4px 8px var(--shadow-dark);
+    /* 使用自定义阴影 */
+    width: 300px;
+}
+
+.close {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+/********************  绩效评估   *******************/
+.login-section {
+    background-color: var(--login-bg-color);
+    border-radius: 20px;
+    max-width: 100%; /* 增加最大宽度，适应不同屏幕 */
+    width: 80%; /* 默认宽度 */
+    margin: 2% auto; /* 增加顶部空间 */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    padding: 40px; /* 增加内边距 */
+    animation: fadeIn 0.5s ease-out; /* 添加淡入动画 */
+    position: relative; /* 设置相对定位 */
+    display: block; /* 初始状态不显示 */
+}
+
+#generate-report {
+    position: absolute; /* 绝对定位 */
+    right: 20px; /* 右对齐 */
+    bottom: 20px; /* 底部对齐 */
+    /* 按钮的其他样式，如边距、填充、字体、背景等根据需要添加 */
+}
+
+.loader {
+    position: absolute;
+    width: 30px;
+    height: 30px;
+    right: 35px;
+    bottom: 37px;
+}
+
+.loader:before,
+.loader:after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    border: 8px solid transparent;
+    border-top-color: var(--primary-color); /* 蓝色 */
+}
+
+.loader:before {
+    z-index: 100;
+    animation: spin 1.5s linear infinite;
+}
+
+.loader:after {
+    border: 8px solid #f3f3f3; /* 浅灰色 */
+}
+
+@keyframes spin {
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+/* 鼠标悬停时改变动画速度 */
+.loader:hover:before {
+    animation: spin 0.75s linear infinite;
+}
+
+/* 输入框聚焦效果 */
+input:focus {
+    border-color: #007bff;
+    box-shadow: 0 0 8px rgba(0,123,255,.25);
+}
+
+/* 动画效果 */
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+.cards-container {
+    display: flex;
+    flex-wrap: nowrap; /* 确保卡片水平排列且不换行 */
+    overflow-x: auto; /* 允许水平滚动 */
+    justify-content: center; /* 确保容器内的项目居中显示 */
+    padding: 40px 0; /* 增加顶部和底部的内边距 */
+    position: relative; /* 设置相对定位 */
+}
+
+.cards-container::after {
+    content: "";
+    flex: 0 0 auto;
+    width: 15%; /* 与.card的负margin-right相同 */
+    height: 1px; /* 高度设置得很小，仅仅为了占位 */
+}
+
+.card {
+    flex: 0 0 auto; /* 防止卡片伸缩 */
+    margin-right: -15%; /* 设置负右边距以实现重叠效果 */
+    padding: 20px; /* 内边距 */
+    background: var(--login-bg-color);
+    /* background: linear-gradient(145deg, var(--feature-cad-bg-1), var(--feature-cad-bg-2)); */
+    border-radius: 30px; /* 边角圆滑度 */
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1); /* 阴影效果 */
+    transition: all 0.3s ease; /* 平滑过渡效果 */
+    width: 26%; /* 初始宽度 */
+    height: 600px; /* 初始高度 */
+    position: relative; /* 设置相对定位 */
+    cursor: pointer; /* 鼠标悬浮时显示指针形状 */
+}
+
+.card:hover {
+    width: 26%; /* 鼠标聚焦时增大宽度，高度不变 */
+    margin-right: 0px; /* 恢复右边距，以避免影响其他卡片布局 */
+    z-index: 2; /* 提高层级，确保当前卡片在最上方显示 */
+}
+
+.card h3 {
+    /* 竖向排布 */
+    writing-mode: vertical-rl;
+    text-orientation: mixed;
+    /* 居中显示 */
+    margin: auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%; /* 根据卡片高度调整 */
+    
+    /* 现代化设计元素 */
+    color: var(--card-text-color); /* 示例颜色，您可以根据需要更改 */
+    font-size: 1.7em; /* 调整字体大小 */
+    font-family: 'Roboto', sans-serif; /* 推荐使用现代字体 */
+    font-weight: 1000; /* 字体加粗 */
+    letter-spacing: 0.05em; /* 字母间距 */
+}
+
+
+/* 模态框基本样式 */
+.jx-modal {
+    display: none; /* 默认不显示 */
+    position: fixed; /* 固定定位 */
+    z-index: 1000; /* 提高层级以确保在顶层 */
+    left: 0;
+    top: 0;
+    width: 100%; /* 全屏宽 */
+    height: 100%; /* 全屏高 */
+    overflow: auto; /* 如果需要滚动条则显示 */
+    background-color: rgba(0, 0, 0, 0.4); /* 统一背景色透明度 */
+}
+
+.jx-modal-content {
+    background-color: var(--background-color, #fefefe); /* 使用自定义背景色，未定义时回退到#fefefe */
+    margin: 15% auto; /* 居中显示 */
+    padding: 20px;
+    border-radius: var(--border-radius, 0); /* 使用自定义圆角变量，未定义时回退到0 */
+    box-shadow: 0 4px 8px var(--shadow-dark, rgba(0, 0, 0, 0.1)); /* 使用自定义阴影，未定义时回退到轻微阴影 */
+    width: var(--modal-width, 50%); /* 使用自定义模态框宽度，未定义时回退到50% */
+}
+
+
+.jx-close {
+    color: var(--close-color, #aaaaaa); /* 使用自定义关闭按钮颜色，未定义时回退到#aaaaaa */
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+}
+
+.jx-close:hover,
+.jx-close:focus {
+    color: black; /* 鼠标悬停和聚焦时颜色变为黑色 */
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.performance-evaluation {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    color: #333;
+    background-color: #fff;
+    padding: 40px;
+    border-radius: 20px; /* 增加弧度以实现更强的弧形效果 */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* 调整阴影以增加深度感 */
+    max-width: 80%;
+    margin: auto;
+    overflow: hidden; /* 确保所有子元素的圆角效果都被包含在容器内
+    */
+    /* animation: fadeIn 0.5s ease-out; 添加淡入动画 */
+    display: none; /* 初始状态不显示 */
+}
+
+.profile-photo-l,
+.profile-photo {
+    margin-right: 50px; /* 大头照和个人信息之间的间隔 */
+}
+
+.profile-photo img {
+    width: 170px; /* 设置大头照宽度 */
+    height: 200px; /* 设置大头照高度 */
+    object-fit: cover; /* 确保图片不失真 */
+}
+
+.profile-photo-l img {
+    width: 150px; /* 设置大头照宽度 */
+    height: 200px; /* 设置大头照高度 */
+    object-fit: cover; /* 确保图片不失真 */
+}
+
+.profile-section {
+    display: flex;
+    align-items: center;
+    vertical-align: middle;
+    margin-bottom: 20px;
+}
+
+.profile-info h3 {
+    margin: 0 0 10px 0;
+    color: var(--title-color);
+}
+
+.profile-info p {
+    margin: 4px 0;
+    font-size: 16px;
+}
+
+/* 添加一些响应式设计元素 */
+@media (max-width: 768px) {
+    .profile-section {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .profile-photo,
+    .profile-info {
+        text-align: center;
+    }
+
+    .profile-photo img {
+        margin-bottom: 15px;
+    }
+}
+
+.teacher-score-table {
+    width: 80%;
+    margin: 0 auto;
+}
+
+.jx-average-scores-card {
+    height: 90%;
+    width: 95%;
+    margin: 0 auto;
+}
+
+.jx-performance-card {
+    height: 90%;
+    width: 95%;
+    margin: 0 auto;
+}
+
+.jx-stu-feedback-card {
+    height: 90%;
+    width: 95%;
+    margin: 0 auto;
+}
+
+.jx-col-feedback-card {
+    height: 90%;
+    width: 95%;
+    margin: 0 auto;
+}
+
+.jx-leader-eval-card {
+    height: 90%;
+    width: 95%;
+    margin: 0 auto;
+}
+
+.jx-self-summary-card{
+    height: 90%;
+    width: 95%;
+    margin: 0 auto;
+}
+
+.teacher-score-table{
+    display: none;
+}
+
+#apply-intro,
+#form-performance-target,
+#form-student-feedback,
+#form-colleague-feedback,
+#form-leader-evaluation,
+#form-self-summary,
+#form-overall-view,
+#form-development-suggestion {
+    text-align: left; /* 确保文本左对齐 */
+    display: block; /* 使span表现为块级元素，允许设置边距 */
+    margin: 0 10px; /* 在元素的左右添加10px的边距 */
+}
+
+h2 {
+    margin-top: 30px;
+    margin-bottom: 10px;
+}
+
+.chart-container {
+    display: flex;
+    justify-content: center;
+    align-items: center; /* 添加这行来确保垂直居中 */
+    margin-top: 10px;
+    margin-bottom: 10px;
+    width: 80%; /* 或者您可以使用具体的像素值，如 width: 600px; 来限制宽度 */
+    margin-left: auto; /* 添加自动外边距以实现水平居中 */
+    margin-right: auto; /* 添加自动外边距以实现水平居中 */
+}
+
+
+#pop,
+#jobPop {
+    display: none;
+    width: 500px;
+    text-align: center;
+    padding: 20px;
+    position: fixed;
+    background-color: var(--login-bg-color);
+    left: 50%;
+    margin-left: -250px;
+    border-radius: 20px;
+    margin-top: 100px
+}
+
+#overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5); /* 半透明的黑色背景 */
+    display: none; /* 默认不显示 */
+}
+
+#sortOption {
+        width: 120px; /* 您可以根据需要调整这个宽度 */
+        cursor: pointer; /* 改变鼠标悬停时的光标形状，提升用户体验 */
+}
+
+

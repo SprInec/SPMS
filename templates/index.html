@@ -1,0 +1,651 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Employee Management System</title>
+    <link rel="stylesheet" href="../static/css/style.css"> <!-- 引入CSS文件 -->
+    <!-- 引入 Chart.js 库 -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <!-- 引入 Font Awesome 图标库的 CSS 文件 -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.3.1/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.3.2/html2canvas.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+
+</head>
+<body>
+    <div class="sidebar">
+        <a href="#主界面" data-target="主界面-content">主界面</a>
+        <a href="#员工信息管理" data-target="员工信息管理-content">员工信息管理</a>
+        <a href="#考勤管理" data-target="考勤管理-content">考勤管理</a>
+        <a href="#薪资管理" data-target="薪资管理-content">薪资管理</a>
+        <a href="#招聘录用" data-target="招聘录用-content">招聘录用</a>
+        <a href="#福利管理" data-target="福利管理-content">福利管理</a>
+        <a href="#绩效评估" data-target="绩效评估-content">绩效评估</a>
+        <a href="#员工反馈与沟通" data-target="员工反馈与沟通-content">员工反馈与沟通</a>
+        <a href="#系统管理和权限控制" data-target="系统管理和权限控制-content">系统管理和权限控制</a>
+    </div>
+
+    <button id="theme-toggle" style="position: fixed; top: 10px; right: 10px;">切换主题</button>
+    <button id="loginButton" style="position: fixed; top: 10px; right: 120px" class="button-right">LogIn</button>
+
+    <!-- 登录模态框 -->
+    <div id="loginModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2>LOG IN</h2>
+            <form id="loginForm">
+                <label for="account">Account:</label>
+                <input type="text" id="account" name="account" required><br>
+                <label for="password">Password:</label>
+                <input type="password" id="password" name="password" required><br>
+                <button type="submit" style="margin-top: 20px;">Login</button>
+            </form>
+        </div>
+    </div>
+
+    <div class="main-content">
+        <div id="主界面-content" class="content-section">
+        <!-- 主界面的内容 -->
+            <!-- <h1>人力资源智汇管理云平台</h1> -->
+            <h1>学校人事管理系统</h1>
+            <p>该平台旨在简化和改进员工信息、考勤、薪资、招聘、福利、绩效评估、反馈以及账号和系统权限的管理。我们提供一站式解决方案，帮助高校和企业更高效地管理人力资源，从而提升组织效率和员工满意度。</p>
+            <div class="features">
+                <div class="feature">
+                    <h2>员工信息管理</h2>
+                    <p>从单一界面管理所有员工数据。跟踪个人详细信息、职位、联系方式等，实现信息的快速检索和更新。</p>
+                </div>
+                <div class="feature">
+                    <h2>考勤管理</h2>
+                    <p>有效监控和记录员工迟到,早退等出勤状况。支持一键考勤，实现自动化考勤数据汇总,支持自动统计考勤状况并以表格及图表方式呈现。</p>
+                </div>
+                <div class="feature">
+                    <h2>薪资管理</h2>
+                    <p>可以在线实时查看员工的薪资信息，轻松管理薪资政策, 确保薪资发放的准确性和及时性。</p>
+                </div>
+                <div class="feature">
+                    <h2>招聘与录用</h2>
+                    <p>通过问答式交互逻辑,支持一键发布招聘信息,申请者可一键发送招聘申请,简化招聘流程,提高招聘效率,优化候选人体验。</p>
+                </div>
+
+                <div class="feature">
+                    <h2>福利管理</h2>
+                    <p>轻松管理员工福利，包括健康保险、退休计划和假期政策。自定义福利计划，满足员工多样化需求。</p>
+                </div>
+
+                <div class="feature">
+                    <h2>绩效评估</h2>
+                    <p>通过问答式交互逻辑进行绩效数据收集, 通过数据分析和人工智能, 实现员工绩效的自动评估, 并以直观的表格的形式给予展现,且支持一键导出为PDF。</p>
+                </div>
+
+                <div class="feature">
+                    <h2>员工反馈与沟通</h2>
+                    <p>促进反馈和讨论的开放沟通渠道，增强员工参与度和满意度。建立有效的沟通机制，促进信息共享和团队协作。</p>
+                </div>
+
+                <div class="feature">
+                    <h2>系统管理与访问控制</h2>
+                    <p>通过基于角色的权限和先进的数据保护措施确保系统的安全访问。实现数据安全与合规性，保护企业和员工信息。</p>
+                </div>
+            </div>
+        </div>
+
+
+        <div id="员工信息管理-content" class="content-section">
+        <!-- 员工信息管理的内容 -->
+            <h1>员工信息管理</h1>
+            <div id="formContainer">
+                <h2>添加员工</h2>
+                <form id="employeeForm">
+                    <label for="name">姓名:</label>
+                    <input type="text" id="name" name="name" required><br>
+                    <label for='sex'>性别:</label>
+                    <select id="sex" name="sex" required>
+                        <option value="">--请选择--</option>
+                        <option value="男">男</option>
+                        <option value="女">女</option>
+                    </select><br>
+                    <label for="title">职位:</label>
+                    <input type="text" id="title" name="title" required><br>
+                    <label for="faculties">学院:</label>
+                    <input type="text" id="faculties" name="faculties"><br>
+                    <label for="phone">联系方式:</label>
+                    <input type="text" id="phone" name="phone"></input><br>
+                    <button type="button" onclick="addEmployee()">添加</button>
+                </form>
+            </div>            
+
+            <div class="employee-table">
+                <div id="employeeListContainer">
+                    <h2>员工列表</h2>
+                    <input type="text" id="search" oninput="filterEmployees()" placeholder="输入员工ID/姓名/性别/职称/学院以搜索...">
+                    <table id="employeeTable">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>姓名</th>
+                                <th>性别</th>
+                                <th>职位</th>
+                                <th>学院</th>
+                                <th>联系方式</th>
+                                <th style="width: 200px;">照片</th>
+                                <th style="width: 120px;">操作</th> <!-- 设置操作列宽度较窄 -->
+                            </tr>
+                        </thead>
+                        <tbody id="employeeTableBody">
+                            <!-- 这里是动态生成的员工列表内容 -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+        </div>
+
+        <div id="考勤管理-content" class="content-section" style="display:none;">
+            <h1>考勤管理</h1>
+
+            <h2>设置考勤时间</h2>
+            <div class="attendance-time">
+                <label for="startTime">开始时间：</label>
+                <input type="time" id="startTimeInput" name="startTime" value="09:00" required>
+                <label for="endTime">结束时间：</label>
+                <input type="time" id="endTimeInput" name="endTime" value="17:00" required>
+            </div>
+
+            <h2>操作</h2>
+            <div class="attendance-controls">
+                <button onclick="addAttendanceRecord()">添加考勤记录</button>
+                <button onclick="generateAttendanceReport()">生成考勤报表</button>
+            </div>
+
+            <!-- 考勤报表区域，初始状态隐藏 -->
+            <div class="attendance-report" style="display:none;">
+
+                <!-- 可视化图表 -->
+                <h2>今日考勤图表</h2>
+                <div class="chart-container">
+                    <canvas id="attendanceChart"></canvas>
+                </div>
+
+                <!-- 考勤统计数据表格 -->
+                <h2>考勤统计数据表格</h2>
+                <table id="attendanceTable1">
+                    <thead>
+                        <tr>
+                            <th>状态</th>
+                            <th>人数</th>
+                        </tr>
+                    </thead>
+                    <tbody id="attendanceTableBody1">
+                        <!-- 表格内容将通过 JavaScript 动态填充 -->
+                    </tbody>
+                </table>
+
+            </div>
+
+            <div class="attendance-table">
+                <h2>考勤记录</h2>
+                <input type="text" id="attendanceSearch" oninput="filterAttendanceRecords()" placeholder="输入员工ID/姓名/考勤状态以搜索...">
+                <table id="attendanceTable2">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>姓名</th>
+                            <th>签到时间</th>
+                            <th>签退时间</th>
+                            <th>状态</th>
+                            <th>操作</th>
+                        </tr>
+                    </thead>
+                    <tbody id="attendanceTableBody2">
+                        <!-- 考勤记录将通过 JavaScript 动态插入到这里 -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <div id="薪资管理-content" class="content-section" style="display:none;">
+            <h1>薪资管理</h1>
+            <div class="salary-table">
+                
+                <h2>薪资信息</h2>
+                <input type="text" id="search_salary" oninput="filterEmployees_salary()" placeholder="输入员工ID/姓名以搜索...">
+                <table id="salaryTable">
+                    <thead>
+                        <tr>
+                            <th>员工ID</th>
+                            <th>姓名</th>
+                            <th>基本工资</th>
+                            <th>绩效奖金</th>
+                            <th>操作</th>
+                        </tr>
+                    </thead>
+                    <tbody id="salaryTableBody">
+                        <!-- 薪资信息将通过 JavaScript 动态插入到这里 -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <div id="招聘录用-content" class="content-section" style="display:none;" >
+                    <h1>招聘与录用</h1>
+                    <div class="job-postings">
+                        <button id="post-job">发布招聘</button>
+                        <h2>招聘信息</h2>
+                        <table id="jobTable">
+                            <thead>
+                                <tr>
+                                    <th>职位</th>
+                                    <th>职位描述</th>
+                                    <th>职位要求</th>
+                                    <th>联系方式</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody id="jobInfo">
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <div class="job-applications">
+                        <h2>应聘信息</h2>
+                        <table id="applyTable">
+                            <thead>
+                                <tr>
+                                    <th width="10%">姓名</th>
+                                    <th width="15%">职位</th>
+                                    <th width="15%">联系方式</th>
+                                    <th width="60%">简介</th>
+                                </tr>
+                            </thead>
+                            <tbody id="applyInfo">
+                            </tbody>
+                        </table>
+                    </div>
+                    <div id="overlay"></div>
+                    <!-- 模态框和其他内容 -->
+
+                    <div id="pop" style="display:none;width: 500px;text-align: center;padding:20px;position:fixed;top:100px;left:50%;margin-left:-250px">
+                        <h2 style="text-align:center">请填写信息</h2>
+                        <div>姓名：<input type="text" id="applicant"></div>
+                        <div>联系方式：<input type="text" id="contactWay"></div>
+                        <div>简介：<input type="text" id="introduce"></div>
+                        <button id="applySubmit">提交</button>
+                        <button id="cancelSubmit">取消</button>
+                    </div>
+                    <div id="jobPop" style="display:none;width: 500px;text-align: center;padding:20px;position:fixed;top:100px;left:50%;margin-left:-250px">
+                        <h2 style="text-align:center">请填写信息</h2>
+                        <div>职位：<input type="text" id="job"></div>
+                        <div>职位描述：<textarea  id="description"></textarea></div>
+                        <div>职位要求：<textarea id="requirement"></textarea></div>
+                        <div>联系方式：<textarea id="email"></textarea></div>
+                        <button id="job-applySubmit">提交</button>
+                        <button id="job-cancelSubmit">取消</button>
+                    </div>
+                </div>
+
+                <div id="福利管理-content" class="content-section" style="display:none;">
+                    <h1>福利管理</h1>
+                    <div class="add-benefits">
+                        <h2>更新员工福利</h2>
+                        <form class="benefits-form" method="post" action="/add_benefits">
+                            <label for="emp_id">员工 ID:</label>
+                            <input type="text" id="emp_id" name="emp_id">
+
+                            <label class="checkbox-label" for="health_insurance">
+                                <input type="checkbox" id="health_insurance" name="health_insurance">
+                                健康保险
+                            </label>
+
+                            <label class="checkbox-label" for="retirement_plans">
+                                <input type="checkbox" id="retirement_plans" name="retirement_plans">
+                                退休计划
+                            </label>
+
+                            <label class="checkbox-label" for="vacation_policies">
+                                <input type="checkbox" id="vacation_policies" name="vacation_policies">
+                                假期政策
+                            </label>
+
+                            <label for="sick_leave">病假:</label>
+                            <input type="number" id="sick_leave" name="sick_leave">
+
+                            <label for="holiday_bonuses">节日奖金:</label>
+                            <input type="number" id="holiday_bonuses" name="holiday_bonuses">
+
+                            <input type="submit" value="更新" id="updateWelfare">
+                        </form>
+                    </div>
+                    
+                    <div class="employee-benefits">
+                        <h2>员工福利</h2>
+                        <input type="text" id="search_welfare" oninput="filterEmployees_welfare()" placeholder="输入员工ID/姓名以搜索...">
+                        <table id="welfareTable">
+                            <thead>
+                                <tr>
+                                    <th>员工ID</th>
+                                    <th>员工姓名</th>
+                                    <th>健康保险</th>
+                                    <th>退休计划</th>
+                                    <th>假期政策</th>
+                                    <th>病假</th>
+                                    <th>节日奖金</th>
+                                </tr>
+                            </thead>
+                            <tbody id="welfareListContainer">
+                            </tbody>
+                        </table>
+                    </div>
+
+                </div>
+
+        <div id="绩效评估-content" class="content-section" style="display:none;">
+            <h1>绩效评估</h1>
+
+            <div class="login-section" display="none">
+                <div class="profile-section">
+                    <div class="profile-photo-l">
+                        <!-- 大头照图片 -->
+                        <img id="teacher_photo" src="">
+                    </div>
+                    <div class="profile-info">
+                        <h3>教师姓名:<span id="teacher_name"></span></h3>
+                        <p>ID:<span id="teacher_id"></span></p>
+                        <p>院系: <span id="teacher_faculty"></span></p>
+                        <p>职称: <span id="teacher_title"></span></p>
+                        <p>教龄: <span id="teacher_tenure"></span>年</p>
+                        <p>电话: <span id="teacher_phone"></span></p> 
+                        <p>邮箱: <span id="teacher_email"></span></p> 
+                    </div>
+                    <!-- 加载动画 -->
+                    <div id="loading-animation" style="display:none;">
+                        <div class="loader"></div>
+                    </div>
+                    <button id="generate-report" onclick="generateTeacherReport()">生成绩效报告</button>
+                </div>
+            </div>
+
+            <div class="cards-container">
+                <div class="card" id="tchachi-scores"><h3>任课成绩</h3></div>
+                <div class="card" id="initial-performance"><h3>绩效目标</h3></div>
+                <div class="card" id="student-feedback"><h3>学生反馈与评价</h3></div>
+                <div class="card" id="colleague-feedback"><h3>同事反馈与评价</h3></div>
+                <div class="card" id="leader-evaluation"><h3>任课组长评价</h3></div>
+                <div class="card" id="self-summary"><h3>教师本人回顾总结</h3></div>
+            </div>
+
+            <!-- 模态框结构 -->
+            <div id="jx-modal" class="jx-modal">
+                <div class="jx-modal-content">
+                    <span class="jx-close">&times;</span>
+                    <!-- 动态内容将被插入这里 -->
+                    <div id="jx-modal-body"></div>
+                </div>
+            </div>
+
+            <div id="performance-evaluation" class="performance-evaluation" display="none">
+                <!--  请在这里填写相关代码  -->
+                <div class="profile-section">
+                    <div class="profile-photo">
+                        <!-- 大头照图片 -->
+                        <img id="info_photo" src="">
+                    </div>
+                    <div class="profile-info">
+                        <h3>教师姓名:<span id="info_name"></span></h3>
+                        <p>ID:<span id="info_id"></span></p>
+                        <p>院系: <span id="info_faculty"></span></p>
+                        <p>职称: <span id="info_title"></span></p>
+                        <p>教龄: <span id="info_tenure"></span>年</p>
+                        <p>电话: <span id="info_phone"></span></p> 
+                        <p>邮箱: <span id="info_email"></span></p> 
+                    </div>
+                </div>
+
+                <table>
+                    <tr>
+                        <th colspan="3">绩效评估依据</th>
+                    </tr>
+                    <tr>
+                        <th rowspan="2" width="30%">任课成绩</th>
+                        <td width="30%">平均成绩</td>
+                        <td width="40%"><span id="form-average-score"></span></td>
+                    </tr>
+                    <tr>
+                        <td>及格率</td>
+                        <td><span id="form-pass-rate"></span></td>
+                    </tr>
+
+                    <tr>
+                        <th>绩效目标</th>
+                        <td colspan="2"><span id="form-performance-target"></span> </td>
+                    </tr>
+
+                    <tr>
+                        <th>学生反馈与评价</th>
+                        <td colspan="2"><span id="form-student-feedback"></span> </td>
+                    </tr>
+                    <tr>
+                        <th>同事反馈与评价</th>
+                        <td colspan="2"><span id="form-colleague-feedback"></span> </td>
+                    </tr>
+                    <tr>
+                        <th>任课组长评价</th>
+                        <td colspan="2"><span id="form-leader-evaluation"></span> </td>
+                    </tr>
+                    <tr>
+                        <th>教师本人回顾总结</th>
+                        <td colspan="2"><span id="form-self-summary"></span> </td>
+                    </tr>
+                </table>
+
+                <table>
+                    <tr>
+                        <th colspan="3">各维度分数及总分数</th>
+                    </tr>
+
+                    <tr>
+                        <th rowspan="3" width="30%">教学质量(40分)</th>
+                        <td width="30%">课堂教学能力(15分)</td>
+                        <td width="40%"><span id="form-cts"></span></td>
+                    </tr>
+                    <tr>
+                        <td>课程设计与规划(10分)</td>
+                        <td><span id="form-cdp"></span></td>
+
+                    </tr>
+                    <tr>
+                        <td>学生评价(15分)</td>
+                        <td><span id="form-se"></span></td>
+                    </tr>
+
+                    <tr>
+                        <th rowspan="2" width="30%">学生成绩(25分)</th>
+                        <td>平均成绩(10分)</td>
+                        <td><span id="form-avg"></span></td>
+                    </tr>
+                    <tr>
+                        <td>及格率(15分)</td>
+                        <td><span id="form-pr"></span></td>
+                    </tr>    
+
+                    <tr>
+                        <th rowspan="2" width="30%">专业发展(20分)</th>
+                        <td>持续教育(10分)</td>
+                        <td><span id="form-ce"></span></td>
+                    </tr>
+                    <tr>
+                        <td>研究与创新(10分)</td>
+                        <td><span id="form-ri"></span></td>
+                    </tr>
+
+                    <tr>
+                        <th rowspan="2" width="30%">教师综合素质(15分)</th>
+                        <td>同事评价(10分)</td>
+                        <td><span id="form-coe"></span></td>
+                    </tr>
+                    <tr>
+                        <td>绩效目标完成情况(5分)</td>
+                        <td><span id="form-tpt"></span></td>
+                    </tr> 
+                    
+                    <tr>
+                        <th>总分(100分)</th>
+                        <td colspan="2"><h4><span id="form-total-score"></span></h4></td>
+                    </tr>
+                    
+                    <tr>
+                        <td colspan="3"><canvas id="form-chart" width="400" height="400"></canvas></td>
+                    </tr>
+
+                </table>
+
+                <table>
+                    <tr>
+                        <th colspan="3">综合评价</th>
+                    </tr>
+                    <tr>
+                        <td colspan="3"><span id="form-overall-view"></span></td>
+                    </tr>
+
+                    <tr>
+                        <th>发展建议</th>
+                        <td><span id="form-development-suggestion"></td>
+                    </tr>
+                </table>
+                <div style="text-align: right; margin-top: 20px;">
+                    <button id="export-pdf">导出为PDF</button>
+                </div>
+                
+            </div>  
+
+            <div id="eva-scores-content">
+
+                <h2>绩效表单</h2>
+                <!-- 添加在<h2>绩效表单</h2>之后 -->
+                <select id="sortOption" onchange="sortScores()">
+                    <option value="default">默认排序</option>
+                    <option value="asc">正序</option>
+                    <option value="desc">倒序</option>
+                </select>
+
+                <input type="text" id="search_eva_scores" oninput="filterEvaScores()" placeholder="输入员工ID/姓名/职称/学院以搜索...">
+                <table id="teacher-score-table">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>姓名</th>
+                            <th>职称</th>
+                            <th>院系</th>
+                            <th>分数</th>
+                        </tr>
+                    </thead>
+                    <tbody id="TeacherScoreTableBody">
+                    <!-- 表格数据将在这里通过JavaScript填充 -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <div id="员工反馈与沟通-content" class="content-section" style="display:none;">
+            <h1>员工反馈与沟通</h1>
+            <div class="feedback-form">
+                <h2>反馈信息表</h2>
+                <form>
+                    <label for="emp_name">姓名:</label>
+                    <input type="text" id="emp_name" name="emp_name"><br><br>
+                    <label for="feedback_type">反馈类型:</label>
+                    <select id="feedback_type" name="feedback_type">
+                        <option value="教学质量与方法">教学质量与方法</option>
+                        <option value="学生支持与发展">学生支持与发展</option>
+                        <option value="校园设施与资源">校园设施与资源</option>
+                        <option value="职业发展与培训">职业发展与培训</option>
+                        <option value="工作环境与文化">工作环境与文化</option>
+                        <option value="政策与程序">政策与程序</option>
+                        <option value="家校合作">家校合作</option>
+                        <option value="安全与健康">安全与健康</option>
+                        <option value="技术整合">技术整合</option>学校领导与管理
+                        <option value="学校领导与管理">学校领导与管理</option>
+                    </select><br><br>
+                    <label for="feedback_comments">反馈意见:</label>
+                    <textarea id="feedback_comments" name="feedback_comments"></textarea><br><br>
+                    <button type="button" onclick="submitFeedback()">提交反馈</button>
+                </form>
+            </div>
+            <div class="feedback-list">
+                <h2>反馈列表</h2>
+                <table id="feedback-table">
+                    <thead>
+                        <tr>
+                            <th width="10%">姓名</th>
+                            <th width="15%">反馈类型</th>
+                            <th width="55%">反馈内容</th>
+                            <th width="20%">日期</th>
+                        </tr>
+                    </thead>
+                    <tbody id="FeedbackTableBody">
+                        <!-- 表格数据将在这里通过JavaScript填充 -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div id="系统管理和权限控制-content" class="content-section" style="display:none;">
+            <h1>系统管理和权限控制</h1>
+            <button onclick="addAccount()">添加账号</button>
+            <h2>账号列表</h2>
+            <input type="text" id="search_sys_accounts" oninput="filterSysAccounts()" placeholder="输入ID/姓名/账号/权限以搜索...">
+            <table id="sys-accounts-table">
+                <thead>
+                    <tr>
+                        <th>序号</th>
+                        <th>ID</th>
+                        <th>姓名</th>
+                        <th>账号</th>
+                        <th>权限</th>
+                        <th>操作</th>
+                    </tr>
+                </thead>
+                <tbody id="SysAccountsTableBody">
+                    <!-- 表格数据将在这里通过JavaScript填充 -->
+                </tbody>
+            </table>            
+        </div>
+
+        <div id="关于-content" class="content-section" style="display:none;">
+            <h1>About</h1>
+            <p>This is a simple employee management system built with Python and Flask. It includes features such as employee information management, attendance management, salary management, job posting and application, performance evaluation, employee feedback and communication, and system settings.</p>
+            <p>This project is open source and available on GitHub at <a href="https://github.com/joseph-zabaleta/simple-employee-management-system">https://github.com/joseph-zabaleta/simple-employee-management-system</a>.</p>
+            <p>Created by <NAME>.</p>
+        </div>
+
+        <div id="theme-toggle-content" class="content-section" style="display:none;">
+            <h1>Theme Toggle</h1>
+            <div class="theme-toggle">
+                <label for="theme-toggle-checkbox">Toggle Theme:</label>
+                <input type="checkbox" id="theme-toggle-checkbox" name="theme-toggle-checkbox" onchange="toggleTheme()">
+            </div>
+        </div>
+
+
+        <div id="loading-screen" class="loading-screen" style="display:none;">
+            <div class="loading-animation"></div>
+            <h1>Loading...</h1>
+        </div>  
+
+    <script src="../static/js/login.js"></script>
+    <script src="../static/js/animation.js"></script>
+    <script src="../static/js/interface_scheduling.js"><></script>
+    <script src="../static/js/employee_info.js"></script>
+    <script src="../static/js/attendance_management.js"></script>
+    <script src="../static/js/theme_toggle.js"></script>
+    <script src="../static/js/salary_management.js"></script>
+    <script src="../static/js/sys_accounts.js"></script>
+    <script src="../static/js/employee_feedback.js"></script>
+    <script src="../static/js/post_and_apply.js"></script>
+    <script src="../static/js/welfare_management.js"></script>
+    <script src="../static/js/jx_model.js"></script>
+    <script src="../static/js/2pdf.js"></script>
+</body>
+</html>
+
