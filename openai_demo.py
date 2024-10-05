@@ -8,8 +8,8 @@ messages = [
 
 # 初始化OpenAI客户端
 client = OpenAI(
-    base_url="https://api.xty.app/v1",
-    api_key="sk-mxKD3SATH7XCyZN6D803C201DfD3408793D7EcEaB2407dF3",
+    base_url="URL_OF_OPENAI_API",
+    api_key="YOUR_API_KEY",
 )
 
 def chat():
